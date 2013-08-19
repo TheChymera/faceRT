@@ -26,8 +26,6 @@ Thumbs.db
 *.pyo
 
 # Data traces:
-*.csv
-*.tsv
 results/*
 image-*.pdf
 image.pdf
