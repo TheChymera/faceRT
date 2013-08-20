@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __author__ = 'Horea Christian'
 from psychopy import visual, data, event, core
 
@@ -36,7 +37,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
     #END CREATE STIMULUS LIST
     
     #stimuli:
-    message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text='Waehlen Sie bei jeder erneuten Bildanzeige die Seite (links/rechts) auf der in der Unteren Zeile die Emotion des oberen\
+    message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text='Wählen Sie bei jeder erneuten Bildanzeige die Seite (links/rechts) auf der in der Unteren Zeile die Emotion des oberen\
                                 Bildes abgeblidet wird. \n\nFuer Anzeigen mit in Kacheln unterteilten und vermischten Bildern waehlen Sie bitte die Seite auf der das obere Bild wiederholt wird. \
                                 \n\nBenutzen Sie fuer die Auswahl die links/rechts Pfeiltasten. \
                                 \n\nFortfahren mit beliebiger Taste.',wrapWidth=20.0)

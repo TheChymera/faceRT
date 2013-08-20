@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-- coding: UTF-8 --
+# -*- coding: utf-8 -*-
 from __future__ import division  # so that 1/3=0.333 instead of 1/3=0
 __author__ = 'Horea Christian'
 from psychopy import core, visual, gui, monitors
