@@ -40,7 +40,6 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	em_faces_stimuli = pd.concat([em_faces_stimuli.ix[i] for i in blocks]).reset_index()
 	random_trials_for_demo = [choice(np.arange(len(em_faces_stimuli[(em_faces_stimuli['block'] == choice(demo_emo))]))),choice(np.arange(len(em_faces_stimuli[(em_faces_stimuli['block'] == choice(demo_scrambled))])))]
 	demo_faces = pd.concat([em_faces_stimuli[(em_faces_stimuli['block'] == choice(demo_emo))].reset_index().ix[[random_trials_for_demo[0]]], em_faces_stimuli[(em_faces_stimuli['block'] == choice(demo_scrambled))].reset_index().ix[[random_trials_for_demo[1]]]]).reset_index()
-	#~print demo_faces, demo_emo, demo_scrambled, random_trials_for_demo, em_faces_stimuli[(em_faces_stimuli['block'] == choice(demo_emo))], em_faces_stimuli[(em_faces_stimuli['block'] == choice(demo_scrambled))]
 	   
 	harari_stimuli = [{'emotion': x[1],'intensity': x[2],'scrambling': x[3],'gender': x[4],'top face':x[5],'left face':x[6],'right face':x[7],'correct answer': x[8]} for x in np.array(em_faces_stimuli)]
 	#END CREATE STIMULUS LIST
@@ -61,7 +60,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	core.wait(process_paddingtime,process_paddingtime)
 	
 	# new loops
-	harari_loop = data.TrialHandler(harari_stimuli, 1, method="sequential")
+	harari_loop = data.TrialHandler(harari_stimuli, 1, method='random')
 	
 	if just_preprocessing:
 		raise NameError('HiThere')
@@ -88,11 +87,15 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	win.flip()
 	event.waitKeys(keyList=[demo_faces.ix[0]['correct answer']])
 	
-	print demo_faces.ix[1]['top face']
-	
-	image_t.setImage(img_path + demo_faces.ix[1]['top face']+'.jpg')
-	image_l.setImage(img_path + demo_faces.ix[1]['left face']+'.jpg')
-	image_r.setImage(img_path + demo_faces.ix[1]['right face']+'.jpg')
+	image_t.setImage(img_path + demo_faces.ix[1]['top face']+'_a.jpg')
+	if demo_faces.ix[1]['correct answer'] == 'left':
+		image_l.setImage(img_path + demo_faces.ix[1]['top face']+'_a.jpg')
+		image_r.setImage(img_path + demo_faces.ix[1]['top face']+'_b.jpg')
+	elif demo_faces.ix[1]['correct answer'] == 'right':
+		image_l.setImage(img_path + demo_faces.ix[1]['top face']+'_b.jpg')
+		image_r.setImage(img_path + demo_faces.ix[1]['top face']+'_a.jpg')
+	else:
+		raise NameError('!!!ERROR: \"correct answer\" field in the stimulus metadata file has a value which is neither \"left\" nor \"right\"')
 	if demo_faces.ix[1]['correct answer'] == 'left':
 		circle_down.setPos((-16,-8))
 	elif demo_faces.ix[1]['correct answer'] == 'right':
@@ -109,9 +112,20 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	event.waitKeys(keyList=[demo_faces.ix[1]['correct answer']])
 	
 	for ix, harari_stimuli_val in enumerate(harari_stimuli):
-		image_t.setImage(img_path + harari_stimuli_val['top face']+'.jpg')
-		image_l.setImage(img_path + harari_stimuli_val['left face']+'.jpg')
-		image_r.setImage(img_path + harari_stimuli_val['right face']+'.jpg')
+		if harari_stimuli_val['scrambling'] != 0:
+			image_t.setImage(img_path + harari_stimuli_val['top face']+'_a.jpg')
+			if harari_stimuli_val['correct answer'] == 'left':
+				image_l.setImage(img_path + harari_stimuli_val['top face']+'_a.jpg')
+				image_r.setImage(img_path + harari_stimuli_val['top face']+'_b.jpg')
+			elif harari_stimuli_val['correct answer'] == 'right':
+				image_l.setImage(img_path + harari_stimuli_val['top face']+'_b.jpg')
+				image_r.setImage(img_path + harari_stimuli_val['top face']+'_a.jpg')
+			else:
+				raise NameError('!!!ERROR: \"correct answer\" field in the stimulus metadata file has a value which is neither \"left\" nor \"right\"')
+		else:
+			image_t.setImage(img_path + harari_stimuli_val['top face']+'.jpg')
+			image_l.setImage(img_path + harari_stimuli_val['left face']+'.jpg')
+			image_r.setImage(img_path + harari_stimuli_val['right face']+'.jpg')
 		#Fixation
 		fixation.draw(win)
 		win.flip()
