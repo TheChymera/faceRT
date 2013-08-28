@@ -37,9 +37,9 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
     #END CREATE STIMULUS LIST
     
     #stimuli:
-    message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text='Wählen Sie bei jeder erneuten Bildanzeige die Seite (links/rechts) auf der in der Unteren Zeile die Emotion des oberen\
-                                Bildes abgeblidet wird. \n\nFuer Anzeigen mit in Kacheln unterteilten und vermischten Bildern waehlen Sie bitte die Seite auf der das obere Bild wiederholt wird. \
-                                \n\nBenutzen Sie fuer die Auswahl die links/rechts Pfeiltasten. \
+    message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Wählen Sie bei jeder erneuten Bildanzeige die Seite (links/rechts), auf der in der Unteren Zeile die Emotion des oberen\
+                                Gescichts abgeblidet wird. \n\nFür Anzeigen mit in Kacheln unterteilten und vermischten Bildern wählen Sie bitte die Seite auf der das obere Bild wiederholt wird. \
+                                \n\nBenutzen Sie für die Auswahl die links/rechts Pfeiltasten. \
                                 \n\nFortfahren mit beliebiger Taste.',wrapWidth=20.0)
     image_l = visual.ImageStim(win, pos=[-16,-8], size=[12,16], interpolate=False)
     image_r = visual.ImageStim(win, pos=[16,-8], size=[12,16], interpolate=False)

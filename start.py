@@ -38,7 +38,7 @@ if do_experiment:
 
 #stimuli:
     fixation = visual.Circle(win, radius=0.15, edges=64, lineColor=(1,1,1), fillColor=(1,1,1), interpolate=True)
-    fin_message = visual.TextStim(win, pos=[0,2],color=[1,1,1],text='Vielen Dank fuer Ihre Teilnahme - bitte melden Sie sich beim Versuchsleiter.'
+    fin_message = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Vielen Dank für Ihre Teilnahme - bitte melden Sie sich beim Versuchsleiter.'
                            ,wrapWidth=20.0)
  
 #clocks:
