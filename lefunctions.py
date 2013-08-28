@@ -19,6 +19,10 @@ def save_csv(filename, firstline=['this line caused by save_csv in lefunctions']
     import csv
     jzt=datetime.now()
     time = str(date.today())+'_'+str(jzt.hour)+str(jzt.minute)+str(jzt.second)
+    if path.isdir(path.dirname(filename)): 
+		pass
+    else:
+		makedirs(path.dirname(filename))
     if path.isfile(filename):
         if path.isdir(path.dirname(filename)+'/.backup'):
             pass
