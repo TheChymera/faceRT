@@ -12,7 +12,8 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	#EXPERIMENT VARIABLES
 	
 	#Files:
-	em_faces_stimuli_file = local_dir + 'metadata/em_faces_stim.csv'
+	constant_faces = False # True here means that the same faces will be shown on the top row of high/low emotional intensity
+	shortlist = False # Compute stimulus sequence automatically from a shortlist
 	img_path = local_dir + 'img/'
 	
 	#Demo Stimuli
@@ -28,10 +29,22 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	
 	#END EXPERIMENT VARIABLES
 	
+	if shortlist:
+		em_faces_stimuli_file = local_dir + 'metadata/stim-shortlist.csv'
+	else:
+		if constant_faces:
+			em_faces_stimuli_file = local_dir + 'metadata/em_faces_stim-same_faces.csv'
+		else:
+			em_faces_stimuli_file = local_dir + 'metadata/em_faces_stim.csv'
+			
 	wmfilename = local_dir + 'results/' + expInfo['Identifier'] + '.csv'
 	wmwriter,wmfile = save_csv(wmfilename, ['emotion','intensity','scrambling','gender','top face','left face','right face','correct answer','keypress','RT','session'])
 	
 	#CREATE STIMULUS LIST
+	
+	#~stimuli_shortlist = pd.DataFrame
+	#~stimulis_shortlist = stimulis_shortlist.from_csv(em_faces_stimuli_file, index_col=False)
+	#~
 	em_faces_stimuli = pd.DataFrame
 	em_faces_stimuli = em_faces_stimuli.from_csv(em_faces_stimuli_file, index_col=False)
 	em_faces_stimuli = em_faces_stimuli.reindex(np.random.permutation(em_faces_stimuli.index))
@@ -111,7 +124,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	win.flip()
 	event.waitKeys(keyList=[demo_faces.ix[1]['correct answer']])
 	
-	for ix, harari_stimuli_val in enumerate(harari_stimuli):
+	for ix, harari_stimuli_val in enumerate(harari_loop):
 		if harari_stimuli_val['scrambling'] != 0:
 			image_t.setImage(img_path + harari_stimuli_val['top face']+'_a.jpg')
 			if harari_stimuli_val['correct answer'] == 'left':
