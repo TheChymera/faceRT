@@ -42,9 +42,6 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	
 	#CREATE STIMULUS LIST
 	
-	#~stimuli_shortlist = pd.DataFrame
-	#~stimulis_shortlist = stimulis_shortlist.from_csv(em_faces_stimuli_file, index_col=False)
-	#~
 	em_faces_stimuli = pd.DataFrame
 	em_faces_stimuli = em_faces_stimuli.from_csv(em_faces_stimuli_file, index_col=False)
 	em_faces_stimuli = em_faces_stimuli.reindex(np.random.permutation(em_faces_stimuli.index))
@@ -76,7 +73,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	harari_loop = data.TrialHandler(harari_stimuli, 1, method='random')
 	
 	if just_preprocessing:
-		raise NameError('HiThere')
+		raise NameError('HiThere This is here because you selected just_processinf = True in .../experiments.py')
 	
 	#INTERACTING W/ PARTICIPANT
 	message3.draw()
