@@ -10,15 +10,17 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	
 	
 	#EXPERIMENT VARIABLES
-	
+
+	# Stimuli pre-pixelation
+	prepixelation = 4 #choose from 0, 2, 4, 6
+		
 	#Files:
 	constant_faces = False # True here means that the same faces will be shown on the top row of high/low emotional intensity
 	shortlist = False # Compute stimulus sequence automatically from a shortlist
-	img_path = local_dir + 'img/'
 	
 	#Demo Stimuli
-	demo_emo = [1,3]
-	demo_scrambled = [2,4,6,8]
+	demo_emo = [1,3] # blocks with "easy" emotion trials 
+	demo_scrambled = [2,4,6,8] # blocks with scrambled images (of all degrees)
 	
 	#Times (in [s]):
 	att_time = 5
@@ -28,6 +30,10 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir, rating
 	just_preprocessing = False
 	
 	#END EXPERIMENT VARIABLES
+	
+	append_to_image_directory = '_px' + str(prepixelation)
+	img_path = local_dir + 'img' + append_to_image_directory + '/'
+	
 	
 	if shortlist:
 		em_faces_stimuli_file = local_dir + 'metadata/stim-shortlist.csv'

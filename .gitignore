@@ -37,8 +37,11 @@ image*.png
 .pydevproject
 .settings/*
 
+#geany
+geany_run_script.sh
+
 #Folders with non-free data:
-img/*
+img*/
 
 #git
 *.py.*
