@@ -1,32 +1,19 @@
 #!/usr/bin/env python
 from __future__ import division
 __author__ = 'Horea Christian'
-from os import listdir, path
-from lefunctions import open_csv
 from scipy.stats import ttest_ind, sem
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from pylab import figure, show, errorbar, setp, legend
 from matplotlib import axis
+from get_and_filter import get_and_filter_results
 
-local_dir = path.dirname(path.realpath(__file__)) + '/'
-results_subdir = 'results/'
-ignore_file_name = 'chr'
-spacing = 1
+# Variables
+spacing = 1 #for plotting
+# END Variables
 
-results_dir = local_dir + results_subdir
-files = [lefile for lefile in listdir(results_subdir) if lefile.endswith('.csv') and not lefile.endswith(ignore_file_name+'.csv')]
-
-
-data_all = pd.DataFrame([]) # empty container frame for concatenating input from multiple files
-for lefile in files:
-	data_lefile = pd.DataFrame.from_csv(results_dir+lefile)
-	data_lefile['ID'] = path.splitext(lefile)[0]
-	data_lefile = data_lefile[data_lefile['RT'] >=0] # remove entries with instant RTs here
-	data_lefile = data_lefile[data_lefile['correct answer'] == data_lefile['keypress']] # remove entries with incorrect answers here
-	data_all = pd.concat([data_all, data_lefile], ignore_index=True)
+data_all = get_and_filter_results()
 
 ids = sorted(list(set(data_all['ID'])))
 pos_ids = np.arange(len(ids))

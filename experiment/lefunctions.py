@@ -2,16 +2,6 @@ from __future__ import division
 __author__ = 'Horea Christian'
 import numpy as np
 
-def open_csv(filename):
-	import csv
-	contents = []
-	lefile = open(filename + '.csv', 'r')
-	readfile = csv.reader(lefile, delimiter =',')
-	for row in readfile:
-		contents.append(row)
-	lefile.close()
-	return contents
-
 def save_csv(filename, firstline=['this line caused by save_csv in lefunctions']):
     from os import path, makedirs
     from shutil import move

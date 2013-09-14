@@ -9,7 +9,7 @@ import time
 
 #EXPERIMENT VARIABLES
 #General:
-local_dir = path.dirname(path.realpath(__file__)) + '/'
+local_dir = path.dirname(path.dirname(path.realpath(__file__))) + '/' # navigates to the folder containing the "analysis" folder
 
 
 #Experiments:

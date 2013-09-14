@@ -43,5 +43,11 @@ geany_run_script.sh
 #Folders with non-free data:
 img*/
 
+#Archive folders:
+*/*/.old
+*/.old
+.old
+
+
 #git
 *.py.*
