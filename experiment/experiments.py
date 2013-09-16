@@ -20,7 +20,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	auto_generated_stimlist = True
 	
 	#Times (in [s]):
-	att_time = 5
+	att_time = 4
 	process_paddingtime = 1
 	
 	#Runtime Parameters
@@ -35,7 +35,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	if auto_generated_stimlist:
 		stimlist = local_dir + 'metadata/faceRT_blocksize4.csv'
 	else:
-		stimlist = local_dir + 'metadata/em_faces_stim.csv' # this is the old hand-mase stimfile !!! will be removed in future versions 
+		stimlist = local_dir + 'metadata/em_faces_stim.csv' # this is the old hand-mase stimfile !!! will be removed in future versions
 			
 	wmfilename = local_dir + 'results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
 	wmwriter,wmfile = save_csv(wmfilename, ['emotion','intensity','scrambling','gender','top face','left face','right face','correct answer','keypress','RT','session'])
@@ -52,13 +52,13 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	random_trials_for_demo = [choice(np.arange(len(faces_stimuli[(faces_stimuli['emotion intensity'] == 100) & (faces_stimuli['scrambling'] == 0)]))),choice(np.arange(len(faces_stimuli[(faces_stimuli['scrambling'] != 0)])))]
 	demo_faces = pd.concat([faces_stimuli[(faces_stimuli['emotion intensity'] == 100) & (faces_stimuli['scrambling'] == 0)].reset_index().ix[[random_trials_for_demo[0]]], faces_stimuli[(faces_stimuli['scrambling'] != 0)].reset_index().ix[[random_trials_for_demo[1]]]]).reset_index()
 	
-	harari_stimuli = [dict(row) for idx, row in faces_stimuli.iterrows()] # turn dataframe into list of dicts 
+	harari_stimuli = [dict(row) for idx, row in faces_stimuli.iterrows()] # turn dataframe into list of dicts
 	#END CREATE STIMULUS LIST
 	
 	#stimuli:
 	circle_top = visual.Circle(win, pos=[0,8], radius=7.5, edges=500, lineColor=(1,0,0), interpolate=True)
 	circle_down = visual.Circle(win, radius=7.5, edges=500, lineColor=(1,0,0), interpolate=True)
-	message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Im Folgenden werden Ihnen unterschiedliche Gesichter mit verschiedenen Emotionen gezeigt. Bitte ordnen Sie immer das	obenstehende Gesicht entsprechend einem der untenstehenden Gesichter zu. \n\nSie haben jeweils zwei Gesichter zur Auswahl. Bestätigen Sie das passende Gesicht jeweils mit der linken oder der rechten Pfeiltaste. \n\nIhnen werden auch in Kacheln unterteilte und unkenntlich gemachte Gesichter gezeigt, von denen Sie die identischen Bilder ebenso zuordnen sollen. \n\nFortfahren zu den Beispielen mit beliebiger Taste.',wrapWidth=30.0)
+	message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Im Folgenden werden Ihnen per Bildschirmanzeige jeweils drei Gesichtsbilder präsentiert. Bitte ordnen Sie immer eins der unterstehenden Gesichter der angezeigten Emotion nach dem oberstehenden Gesicht zu. \n\nSelektieren Sie das passende Gesicht jeweils mit der linken oder der rechten Pfeiltaste. \n\nIhnen werden separat auch in Kacheln unterteilte und unkenntlich gemachte Gesichter gezeigt. In diesen Bildschirmanzeigen müssen Sie das mit dem oberen Bild identische untere Bilder ebenso zuordnen. \n\nFortfahren zu den Beispielen mit beliebiger Taste.',wrapWidth=30.0)
 	message_demo1 = visual.TextStim(win, pos=[0,-15],color=[1,1,1],text=u'Fortfahren mit der entsprechenden Pfeiltaste.',wrapWidth=20.0)
 	message_demo2 = visual.TextStim(win, pos=[0,-15],color=[1,1,1],text=u'Fortfahren und Beenden der Demonstration mit der entsprechenden Pfeiltaste. \nDas Experiment fängt gleich im Anschluss an.',wrapWidth=20.0)
 	image_l = visual.ImageStim(win, pos=[-16,-8], size=[12,16], interpolate=False)
@@ -67,7 +67,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	core.wait(process_paddingtime,process_paddingtime)
 	
 	# new loops
-	harari_loop = data.TrialHandler(harari_stimuli, 1, method='sequential')
+	harari_loop = data.TrialHandler(harari_stimuli, 1, method='random')
 	
 	if just_preprocessing:
 		raise NameError('Hi there! This is here because you selected just_processinf = True in .../experiments.py')
