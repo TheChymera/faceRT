@@ -63,7 +63,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	message_demo2 = visual.TextStim(win, pos=[0,-15],color=[1,1,1],text=u'Fortfahren und Beenden der Demonstration mit der entsprechenden Pfeiltaste. \nDas Experiment fängt gleich im Anschluss an.',wrapWidth=20.0)
 	image_l = visual.ImageStim(win, pos=[-16,-8], size=[12,16], interpolate=False)
 	image_r = visual.ImageStim(win, pos=[16,-8], size=[12,16], interpolate=False)
-	image_t = visual.ImageStim(win, pos=[0,8], size=[12,16], interpolate=True)
+	image_t = visual.ImageStim(win, pos=[0,8], size=[12,16], interpolate=False)
 	core.wait(process_paddingtime,process_paddingtime)
 	
 	# new loops
