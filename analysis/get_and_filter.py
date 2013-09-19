@@ -18,6 +18,8 @@ if path.isdir(global_dir + paradigm + '/px' + str(image_scrambling)):
 	results_dir = global_dir + paradigm + '/px' + str(image_scrambling) + '/'
 else: results_dir = local_dir + results_subdir
 
+print('Loading data from '+results_dir)
+
 def get_and_filter_results():
 	files = [lefile for lefile in listdir(results_dir) if lefile.endswith('.csv') and not lefile.endswith(ignore_file_name+'.csv')]
 	data_all = pd.DataFrame([]) # empty container frame for concatenating input from multiple files
