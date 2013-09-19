@@ -16,7 +16,6 @@ local_dir = path.dirname(path.dirname(path.realpath(__file__))) + '/' # navigate
 
 if path.isdir(global_dir + paradigm + '/px' + str(image_scrambling)):
 	results_dir = global_dir + paradigm + '/px' + str(image_scrambling) + '/'
-	print results_dir
 else: results_dir = local_dir + results_subdir
 
 def get_and_filter_results():
