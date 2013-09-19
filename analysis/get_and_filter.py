@@ -3,11 +3,21 @@ __author__ = 'Horea Christian'
 from os import listdir, path
 import pandas as pd
 
-local_dir = path.dirname(path.dirname(path.realpath(__file__))) + '/' # navigates to the folder containing the "analysis" folder
-results_subdir = 'results/px0/'
+image_scrambling = 6
+paradigm = '6px-4px-5steps'
+
+global_dir = '~/data/faceRT/'
+results_subdir = 'results/px'+str(image_scrambling)+'/'
 ignore_file_name = 'chr'
 
-results_dir = local_dir + results_subdir
+global_dir = path.expanduser(global_dir)
+local_dir = path.dirname(path.dirname(path.realpath(__file__))) + '/' # navigates to the folder containing the "analysis" folder
+
+
+if path.isdir(global_dir + paradigm + '/px' + str(image_scrambling)):
+	results_dir = global_dir + paradigm + '/px' + str(image_scrambling) + '/'
+	print results_dir
+else: results_dir = local_dir + results_subdir
 
 def get_and_filter_results():
 	files = [lefile for lefile in listdir(results_dir) if lefile.endswith('.csv') and not lefile.endswith(ignore_file_name+'.csv')]
