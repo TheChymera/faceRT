@@ -10,9 +10,6 @@ from pylab import figure, show, errorbar, setp, legend
 from matplotlib import axis
 from get_and_filter import get_and_filter_results
 
-# Variables
-spacing = 1 #for plotting
-# END Variables
 
 data_all = get_and_filter_results(remove_incorrect=False)
 
@@ -72,22 +69,22 @@ for scrambling_id, scrambling in enumerate(set(total_errors['scrambling'])):
 		plot_em_strong = plt.bar(pos_ids-width, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 100)]['error rate'], width ,color='m', alpha=0.4, zorder = 1)
 		plot_em_weak = plt.bar(pos_ids, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 40)]['error rate'], width ,color='m', alpha=0.7, zorder = 1)
 		#below this: total graphs
-		plt.bar(pos_ids[-1]+spacing+1-width, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 100)]['error rate'].mean(), width ,color='m', alpha=0.4, zorder = 1)
-		errorbar(pos_ids[-1]+spacing+1-(width/2), total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 100)]['error rate'].mean(), yerr=sem(total_errors[(total_errors['scrambling'] == scrambling)]['error rate']), ecolor='0.5', elinewidth='3', capsize=0, linestyle='None', zorder = 2)
-		plt.bar(pos_ids[-1]+spacing+1, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 40)]['error rate'].mean(), width ,color='m', alpha=0.7, zorder = 1)
-		errorbar(pos_ids[-1]+spacing+1+(width/2)+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 40)]['error rate'].mean(), yerr=sem(total_errors[(total_errors['scrambling'] == scrambling)]['error rate']), ecolor='0.5', elinewidth='3', capsize=0, linestyle='None', zorder = 2)
+		plt.bar(pos_ids[-1]+1-width, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 100)]['error rate'].mean(), width ,color='m', alpha=0.4, zorder = 1)
+		errorbar(pos_ids[-1]+1-(width/2), total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 100)]['error rate'].mean(), yerr=sem(total_errors[(total_errors['scrambling'] == scrambling)]['error rate']), ecolor='0.5', elinewidth='3', capsize=0, linestyle='None', zorder = 2)
+		plt.bar(pos_ids[-1]+1, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 40)]['error rate'].mean(), width ,color='m', alpha=0.7, zorder = 1)
+		errorbar(pos_ids[-1]+1+(width/2)+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling) & (total_errors['intensity'] == 40)]['error rate'].mean(), yerr=sem(total_errors[(total_errors['scrambling'] == scrambling)]['error rate']), ecolor='0.5', elinewidth='3', capsize=0, linestyle='None', zorder = 2)
 	else:
 		#below this: per-participant graphs
 		plot_sc = plt.bar(pos_ids+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling)]['error rate'], width ,color='g', alpha=0.2+0.12*scrambling_id, zorder = 1)
 		#below this: total graphs
-		plot_sc = plt.bar(pos_ids[-1]+spacing+1+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling)]['error rate'].mean(), width ,color='g', alpha=0.2+0.12*scrambling_id, zorder = 1)
-		errorbar(pos_ids[-1]+spacing+1+(width/2)+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling)]['error rate'].mean(), yerr=sem(total_errors[(total_errors['scrambling'] == scrambling)]['error rate']), ecolor='0.5', elinewidth='3', capsize=0, linestyle='None', zorder = 2)
+		plot_sc = plt.bar(pos_ids[-1]+1+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling)]['error rate'].mean(), width ,color='g', alpha=0.2+0.12*scrambling_id, zorder = 1)
+		errorbar(pos_ids[-1]+1+(width/2)+width*scrambling_id, total_errors[(total_errors['scrambling'] == scrambling)]['error rate'].mean(), yerr=sem(total_errors[(total_errors['scrambling'] == scrambling)]['error rate']), ecolor='0.5', elinewidth='3', capsize=0, linestyle='None', zorder = 2)
 
-plt.axvline(pos_ids[-1]+spacing+width*3, color='0.2')
+plt.axvline(pos_ids[-1]+1-width*2.5, color='0.2')
 
-ids=ids+['']+['TOTAL']
+ids=ids+['TOTAL']
 pos_ids = np.arange(len(ids))
-ax.set_xlim(0, pos_ids.max()+width*6)
+ax.set_xlim(0, pos_ids[-1]+width*5)
 ax.set_ylim(-0.02, total_errors['error rate'].max()*1.2)
 ax.set_ylabel(r'$\mathsf{\Sigma_{wrong} / \Sigma_{all}}$', fontsize=13)
 ax.set_xlabel('Participant')
