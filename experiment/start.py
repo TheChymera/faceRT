@@ -25,6 +25,7 @@ end_pause = config.getint('Times', 'end_pause')
 monitor_width = config.getint('Monitor', 'width')
 monitor_distance = config.getint('Monitor', 'distance')
 monitor_resolution = [config.getint('Monitor', 'x_resolution'), config.getint('Monitor', 'y_resolution')]
+u = config.getfloat('Stimuli', 'u')
 #END IMPORT VARIABLES
 
 
@@ -43,11 +44,11 @@ win = visual.Window(resolution, color=[-0.043,-0.043,-0.043],fullscr=True,allowG
 win.setRecordFrameIntervals(False)
 
 #stimuli:
-fixation = visual.Circle(win, radius=0.15, edges=64, lineColor=(1,1,1), fillColor=(1,1,1), interpolate=True)
-fin_message = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Vielen Dank für Ihre Teilnahme - bitte melden Sie sich beim Versuchsleiter.'
-		       ,wrapWidth=20.0)
-wait_message = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Bitte warten.', wrapWidth=20.0)
-
+fixation = visual.Circle(win, radius=u/50, edges=64, lineColor=(1,1,1), fillColor=(1,1,1), interpolate=True)
+fin_message = visual.TextStim(win, pos=[0,u/4],color=[1,1,1],text=u'Vielen Dank für Ihre Teilnahme - bitte melden Sie sich beim Versuchsleiter.'
+                           ,wrapWidth=2*u, height=u/10)
+wait_message = visual.TextStim(win, pos=[0,u/4],color=[1,1,1],text=u'Bitte warten.', wrapWidth=2*u, height=u/10)
+ 
 #clocks:
 globalClock = core.Clock()
 trialClock = core.Clock()
@@ -55,7 +56,7 @@ trialClock = core.Clock()
 #call experiment:
 wait_message.draw()
 win.flip()
-em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir)
+em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir)
 fin_message.draw()
 win.flip()
 time.sleep(end_pause)

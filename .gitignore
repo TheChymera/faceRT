@@ -15,9 +15,7 @@
 .DS_Store
 .DS_Store?
 ._*
-.Spotlight-V100
 .Trashes
-Icon?
 ehthumbs.db
 Thumbs.db
 
@@ -32,11 +30,6 @@ image.pdf
 image.pmg
 image*.png
 
-#eclipse 
-.project
-.pydevproject
-.settings/*
-
 #geany
 geany_run_script.sh
 
@@ -48,6 +41,8 @@ img*/
 */.old
 .old
 
+#config files:
+*.cfg
 
 #git
 *.py.*

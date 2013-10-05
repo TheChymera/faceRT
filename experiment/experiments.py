@@ -2,7 +2,7 @@
 __author__ = 'Horea Christian'
 from psychopy import visual, data, event, core
 
-def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
+def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	from numpy.random import permutation, choice, sample
 	from lefunctions import save_csv
 	from os import listdir
@@ -43,18 +43,19 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 		faces_stimuli = pd.concat([faces_stimuli.ix[i] for i in blocks]).reset_index() # randomizes blocks
 	random_trials_for_demo = [choice(np.arange(len(faces_stimuli[(faces_stimuli['emotion intensity'] == 100) & (faces_stimuli['scrambling'] == 0)]))),choice(np.arange(len(faces_stimuli[(faces_stimuli['scrambling'] != 0)])))]
 	demo_faces = pd.concat([faces_stimuli[(faces_stimuli['emotion intensity'] == 100) & (faces_stimuli['scrambling'] == 0)].reset_index().ix[[random_trials_for_demo[0]]], faces_stimuli[(faces_stimuli['scrambling'] != 0)].reset_index().ix[[random_trials_for_demo[1]]]]).reset_index()
+	
 	harari_stimuli = [dict(row) for idx, row in faces_stimuli.iterrows()] # turn dataframe into list of dicts
 	#PREPARE STIMULUS LIST
 	
 	#stimuli:
-	circle_top = visual.Circle(win, pos=[0,8], radius=7.5, edges=500, lineColor=(1,0,0), interpolate=True)
-	circle_down = visual.Circle(win, radius=7.5, edges=500, lineColor=(1,0,0), interpolate=True)
-	message3 = visual.TextStim(win, pos=[0,2],color=[1,1,1],text=u'Im Folgenden werden Ihnen per Bildschirmanzeige jeweils drei Gesichtsbilder präsentiert. Bitte ordnen Sie immer eins der unterstehenden Gesichter der angezeigten Emotion nach dem oberstehenden Gesicht zu. \n\nSelektieren Sie das passende Gesicht jeweils mit der linken oder der rechten Pfeiltaste. \n\nIhnen werden separat auch in Kacheln unterteilte und unkenntlich gemachte Gesichter gezeigt. In diesen Bildschirmanzeigen müssen Sie das mit dem oberen Bild identische untere Bilder ebenso zuordnen. \n\nFortfahren zu den Beispielen mit beliebiger Taste.',wrapWidth=30.0)
-	message_demo1 = visual.TextStim(win, pos=[0,-15],color=[1,1,1],text=u'Fortfahren mit der entsprechenden Pfeiltaste.',wrapWidth=20.0)
-	message_demo2 = visual.TextStim(win, pos=[0,-15],color=[1,1,1],text=u'Fortfahren und Beenden der Demonstration mit der entsprechenden Pfeiltaste. \nDas Experiment fängt gleich im Anschluss an.',wrapWidth=20.0)
-	image_l = visual.ImageStim(win, pos=[-16,-8], size=[12,16], interpolate=False)
-	image_r = visual.ImageStim(win, pos=[16,-8], size=[12,16], interpolate=False)
-	image_t = visual.ImageStim(win, pos=[0,8], size=[12,16], interpolate=False)
+	circle_top = visual.Circle(win, pos=[0,u/2], radius=u/2*0.95, edges=500, lineColor=(1,0,0), interpolate=True)
+	circle_down = visual.Circle(win, radius=u/2*0.95, edges=500, lineColor=(1,0,0), interpolate=True)
+	message3 = visual.TextStim(win, pos=[0,u/6],color=[1,1,1],text=u'Im Folgenden werden Ihnen per Bildschirmanzeige jeweils drei Gesichtsbilder präsentiert. Bitte ordnen Sie immer eins der unterstehenden Gesichter der angezeigten Emotion nach dem oberstehenden Gesicht zu. \n\nSelektieren Sie das passende Gesicht jeweils mit der linken oder der rechten Pfeiltaste. \n\nIhnen werden separat auch in Kacheln unterteilte und unkenntlich gemachte Gesichter gezeigt. In diesen Bildschirmanzeigen müssen Sie das mit dem oberen Bild identische untere Bilder ebenso zuordnen. \n\nFortfahren zu den Beispielen mit beliebiger Taste.',wrapWidth=4*u, height=u/10)
+	message_demo1 = visual.TextStim(win, pos=[0,-1.4*u],color=[1,1,1],text=u'Fortfahren mit der entsprechenden Pfeiltaste.',wrapWidth=3*u, height=u/10)
+	message_demo2 = visual.TextStim(win, pos=[0,-1.4*u],color=[1,1,1],text=u'Fortfahren und Beenden der Demonstration mit der entsprechenden Pfeiltaste. \nDas Experiment fängt gleich im Anschluss an.',wrapWidth=3*u, height=u/10)
+	image_l = visual.ImageStim(win, pos=[-u,-u/2], size=[u*3/4,u], interpolate=True)
+	image_r = visual.ImageStim(win, pos=[u,-u/2], size=[u*3/4,u], interpolate=True)
+	image_t = visual.ImageStim(win, pos=[0,u/2], size=[u*3/4,u], interpolate=True)
 	
 	# new loops
 	harari_loop = data.TrialHandler(harari_stimuli, 1, method='random')
@@ -70,9 +71,9 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	image_l.setImage(img_path + demo_faces.ix[0]['left face'])
 	image_r.setImage(img_path + demo_faces.ix[0]['right face'])
 	if demo_faces.ix[0]['correct answer'] == 'left':
-		circle_down.setPos((-16,-8))
+		circle_down.setPos((-u,-u/2))
 	elif demo_faces.ix[0]['correct answer'] == 'right':
-		circle_down.setPos((16,-8))
+		circle_down.setPos((u,-u/2))
 	else:
 		raise NameError('!!!ERROR: \"correct answer\" field in the stimulus metadata file has a value which is neither \"left\" nor \"right\"')
 	message_demo1.draw(win)
@@ -88,12 +89,12 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, local_dir):
 	image_l.setImage(img_path + demo_faces.ix[1]['left face'])
 	image_r.setImage(img_path + demo_faces.ix[1]['right face'])
 	if demo_faces.ix[1]['correct answer'] == 'left':
-		circle_down.setPos((-16,-8))
+		circle_down.setPos((-u,-u/2))
 	elif demo_faces.ix[1]['correct answer'] == 'right':
-		circle_down.setPos((16,-8))
+		circle_down.setPos((u,-u/2))
 	else:
 		raise NameError('!!!ERROR: \"correct answer\" field in the stimulus metadata file has a value which is neither \"left\" nor \"right\"')
-	message_demo1.draw(win)
+	message_demo2.draw(win)
 	image_t.draw(win)
 	image_l.draw(win)
 	image_r.draw(win)
