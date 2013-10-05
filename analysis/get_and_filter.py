@@ -4,9 +4,9 @@ from os import listdir, path
 import pandas as pd
 
 image_scrambling = 6
-paradigm = '6px-4px-5steps'
+paradigm = '11px-4px-5steps'
 
-global_dir = '~/data/faceRT/x'
+global_dir = '~/data/faceRT/'
 results_subdir = 'results/px'+str(image_scrambling)+'/'
 ignore_file_name = 'chr'
 
