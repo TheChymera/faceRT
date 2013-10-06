@@ -20,17 +20,17 @@ config.read(cfg_file)
 #END GET CONFIG FILE
 
 #IMPORT VARIABLES
-fixationtime = config.getint('Times', 'fixationtime')
-end_pause = config.getint('Times', 'end_pause')
-monitor_width = config.getint('Monitor', 'width')
-monitor_distance = config.getint('Monitor', 'distance')
+fixationtime = config.getfloat('Times', 'fixationtime')
+end_pause = config.getfloat('Times', 'end_pause')
+monitor_width = config.getfloat('Monitor', 'width')
+monitor_distance = config.getfloat('Monitor', 'distance')
 monitor_resolution = [config.getint('Monitor', 'x_resolution'), config.getint('Monitor', 'y_resolution')]
 u = config.getfloat('Stimuli', 'u')
 #END IMPORT VARIABLES
 
 
 #Monitor specs:
-mymon = monitors.Monitor('testMonitor', width=monitor_width, distance=monitor_distance) # psychopy actually wants half the width
+mymon = monitors.Monitor('testMonitor', width=monitor_width/2, distance=monitor_distance) # psychopy actually wants half the width
 resolution = monitor_resolution
 
 #INTERACTING W/ PARTICIPANT

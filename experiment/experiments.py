@@ -19,18 +19,19 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	#END GET CONFIG FILE
 	
 	#IMPORT VARIABLES
-	block_presentation = config.get('Stimuli', 'block_presentation')
-	prepixelation = config.get('Stimuli', 'prepixelation')
+	block_presentation = config.getboolean('Stimuli', 'block_presentation')
+	prepixelation = config.getint('Stimuli', 'prepixelation')
 	stimulus_list = config.get('Stimuli', 'stimulus_list')
-	trial_time = config.get('Times', 'trial_time')
+	trial_time = config.getfloat('Times', 'trial_time')
 	just_preprocessing = config.getboolean('Runtime', 'just_preprocessing')
 	#END IMPORT VARIABLES
 
+	print trial_time
 	scrambling_subdirectory = 'px' + str(prepixelation)
 	img_path = local_dir + 'img/' + scrambling_subdirectory + '/'
 	stimlist = local_dir + 'metadata/' + stimulus_list
 			
-	results_filename = path.dirname(local_dir) + 'results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
+	results_filename = path.dirname(local_dir) + '/results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
 	results_writer,results_file = save_csv(results_filename, ['emotion','intensity','scrambling','gender','top face','left face','right face','correct answer','keypress','RT','session'])
 	
 	#PREPARE STIMULUS LIST	
@@ -118,7 +119,8 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 		win.flip()
 		trialClock.reset() #Put this after the fixation win.flip if you want to count fixation as part of the trial.
 		core.wait(trial_time,trial_time)
-		if len(event.getKeys(['escape'])): core.quit() # quit via escape
+		if len(event.getKeys(['escape'])):
+			core.quit() # quit via escape
 		keypress = event.getKeys(keyList=None,timeStamped=trialClock)
 		if keypress == []:
 			keypress = np.array([['none',5]])
