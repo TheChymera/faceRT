@@ -26,7 +26,6 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	just_preprocessing = config.getboolean('Runtime', 'just_preprocessing')
 	#END IMPORT VARIABLES
 
-	print trial_time
 	scrambling_subdirectory = 'px' + str(prepixelation)
 	img_path = local_dir + 'img/' + scrambling_subdirectory + '/'
 	stimlist = local_dir + 'metadata/' + stimulus_list

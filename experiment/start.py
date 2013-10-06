@@ -28,7 +28,6 @@ monitor_resolution = [config.getint('Monitor', 'x_resolution'), config.getint('M
 u = config.getfloat('Stimuli', 'u')
 #END IMPORT VARIABLES
 
-
 #Monitor specs:
 mymon = monitors.Monitor('testMonitor', width=monitor_width/2, distance=monitor_distance) # psychopy actually wants half the width
 resolution = monitor_resolution
