@@ -25,6 +25,7 @@ Thumbs.db
 
 # Data traces:
 results/*
+*/results/
 image-*.pdf
 image.pdf
 image.pmg
