@@ -5,7 +5,7 @@ from psychopy import visual, data, event, core
 def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	from numpy.random import permutation, choice, sample
 	from lefunctions import save_csv
-	from os import listdir
+	from os import listdir, path
 	import numpy as np
 	import pandas as pd
 	import ConfigParser
@@ -30,7 +30,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	img_path = local_dir + 'img/' + scrambling_subdirectory + '/'
 	stimlist = local_dir + 'metadata/' + stimulus_list
 			
-	results_filename = local_dir + 'results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
+	results_filename = path.dirname(local_dir) + 'results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
 	results_writer,results_file = save_csv(results_filename, ['emotion','intensity','scrambling','gender','top face','left face','right face','correct answer','keypress','RT','session'])
 	
 	#PREPARE STIMULUS LIST	
