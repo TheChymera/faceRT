@@ -30,7 +30,7 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	img_path = local_dir + 'img/' + scrambling_subdirectory + '/'
 	stimlist = local_dir + 'metadata/' + stimulus_list
 			
-	results_filename = path.dirname(local_dir) + '/results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
+	results_filename = path.dirname(path.dirname(local_dir)) + '/results/' + scrambling_subdirectory + '/' + expInfo['Identifier'] + '.csv'
 	results_writer,results_file = save_csv(results_filename, ['emotion','intensity','scrambling','gender','top face','left face','right face','correct answer','keypress','RT','session'])
 	
 	#PREPARE STIMULUS LIST	
@@ -48,8 +48,8 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 	#PREPARE STIMULUS LIST
 	
 	#stimuli:
-	circle_top = visual.Circle(win, pos=[0,u/2], radius=u/2*0.95, edges=500, lineColor=(1,0,0), interpolate=True)
-	circle_down = visual.Circle(win, radius=u/2*0.95, edges=500, lineColor=(1,0,0), interpolate=True)
+	circle_top = visual.Circle(win, pos=[0,u/2], radius=u/2*0.97, edges=500, lineColor=(1,0,0), interpolate=True)
+	circle_down = visual.Circle(win, radius=u/2*0.97, edges=500, lineColor=(1,0,0), interpolate=True)
 	message3 = visual.TextStim(win, pos=[0,u/6],color=[1,1,1],text=u'Im Folgenden werden Ihnen per Bildschirmanzeige jeweils drei Gesichtsbilder präsentiert. Bitte ordnen Sie immer eins der unterstehenden Gesichter der angezeigten Emotion nach dem oberstehenden Gesicht zu. \n\nSelektieren Sie das passende Gesicht jeweils mit der linken oder der rechten Pfeiltaste. \n\nIhnen werden separat auch in Kacheln unterteilte und unkenntlich gemachte Gesichter gezeigt. In diesen Bildschirmanzeigen müssen Sie das mit dem oberen Bild identische untere Bilder ebenso zuordnen. \n\nFortfahren zu den Beispielen mit beliebiger Taste.',wrapWidth=4*u, height=u/10)
 	message_demo1 = visual.TextStim(win, pos=[0,-1.4*u],color=[1,1,1],text=u'Fortfahren mit der entsprechenden Pfeiltaste.',wrapWidth=3*u, height=u/10)
 	message_demo2 = visual.TextStim(win, pos=[0,-1.4*u],color=[1,1,1],text=u'Fortfahren und Beenden der Demonstration mit der entsprechenden Pfeiltaste. \nDas Experiment fängt gleich im Anschluss an.',wrapWidth=3*u, height=u/10)
