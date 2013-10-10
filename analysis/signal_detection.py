@@ -8,7 +8,7 @@ import pandas as pd
 from matplotlib.font_manager import FontProperties
 from pylab import figure, show, errorbar, setp, legend
 from matplotlib import axis
-from get_and_filter import get_and_filter_results
+from data_functions import get_and_filter_results
 
 
 data_all = get_and_filter_results(remove_incorrect=False)
@@ -25,12 +25,6 @@ scrambling_list = set(data_all['scrambling'])
 errors_index = range(len(set(data_all['ID'])))
 errors_columns = ['ID', 'correct', 'incorrect']
 errors = pd.DataFrame(index=errors_index, columns=errors_columns) # empty container frame for concatenating input from multiple files
-#~
-#~for le_ix, le_id in enumerate(set(data_all['ID'])):
-	#~errors.ix[le_ix]['ID'] = le_id
-	#~errors.ix[le_ix]['correct'] = len(data_all[(data_all['correct answer'] == data_all['keypress']) & (data_all['ID'] == le_id)].index)
-	#~errors.ix[le_ix]['incorrect'] = len(data_all[(data_all['correct answer'] != data_all['keypress']) & (data_all['ID'] == le_id)].index)
-#~print errors
 	
 total_errors_index = range(len(set(data_all['ID']))*(len(scrambling_list)+1)) # number of error entries - per ID: one for each scrambling step, and TWO for 0
 total_errors_columns = ['ID', 'error rate', 'scrambling', 'intensity']
