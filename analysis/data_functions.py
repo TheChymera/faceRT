@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 __author__ = 'Horea Christian'
 
 def get_config_file():
@@ -35,7 +34,7 @@ def get_and_filter_results(experiment=False, source=False, prepixelation=False, 
 	#END IMPORT VARIABLES
 	
 	if source == 'live':
-		results_dir = path.dirname(path.dirname(path.realpath(__file__))) + data_path + prepixelation + '/'
+		results_dir = path.dirname(path.dirname(path.realpath(__file__))) + data_path + str(prepixelation) + '/'
 	else:
 		results_dir = data_path + experiment + '/px' + str(prepixelation) + '/' 
 	results_dir = path.expanduser(results_dir)
