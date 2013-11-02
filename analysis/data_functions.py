@@ -1,48 +1,55 @@
 __author__ = 'Horea Christian'
 
-def get_config_file():
-	from os import listdir, path
-	import ConfigParser
-	#GET CONFIG FILE
-	cfg_file = filter(lambda x: x.endswith('.cfg'), listdir(path.dirname(path.realpath(__file__))))
-	if len(cfg_file) > 1:
-	    raise InputError('There are multiple *.cfg files in your experiment\'s rot directory (commonly .../faceRT/experiment) - Please delete all but one (whichever you prefer). The script will not run until then.')
-	config = ConfigParser.ConfigParser()
-	config.read(cfg_file)
-	return config
-	#END GET CONFIG FILE
-
-
 def get_and_filter_results(experiment=False, source=False, prepixelation=False, remove_incorrect=True):
 	import pandas as pd
-	from os import listdir, path
-	
-	config = get_config_file()
+	from os import path
+	import sys
+	from chr_helpers import get_config_file
+
+	config = get_config_file(localpath=path.dirname(path.realpath(__file__))+'/')
 	
 	#IMPORT VARIABLES
-	if prepixelation:
-		pass
-	else: prepixelation = config.getint('Data', 'prepixelation')
-	if experiment:
-		pass
-	else: experiment = config.get('Data', 'experiment')
-	if source:
-		pass
-	else: source = config.get('Source', 'source')
+	if not prepixelation:
+		prepixelation = config.getint('Data', 'prepixelation')
+	if not experiment:
+		experiment = config.get('Data', 'experiment')
+	if not source:
+		source = config.get('Source', 'source')
 	data_path = config.get('Addresses', source)
 	ignore_filename = config.get('Data', 'ignore_filename')
 	#END IMPORT VARIABLES
 	
-	if source == 'live':
+	if source == 'server':
+		from HTMLParser import HTMLParser
+		import urllib
+		class ChrParser(HTMLParser):
+			def handle_starttag(self, tag, attrs):
+				if tag =='a':
+					for key, value in attrs:
+						if key == 'href' and value.endswith('.csv'):
+							pre_fileslist.append(value)
+		results_dir = data_path+experiment+'/px'+str(prepixelation)+'/'
+		print results_dir
+		data_url = urllib.urlopen(results_dir).read()
+		parser = ChrParser()
+		pre_fileslist = []
+		parser.feed(data_url) # pre_fileslist gets populated here
+	elif source == 'live':
+		from os import listdir
 		results_dir = path.dirname(path.dirname(path.realpath(__file__))) + data_path + str(prepixelation) + '/'
-	else:
-		results_dir = data_path + experiment + '/px' + str(prepixelation) + '/' 
-	results_dir = path.expanduser(results_dir)
-	
+		results_dir = path.expanduser(results_dir)
+		pre_fileslist = listdir(results_dir)
+	elif source == 'local':
+		from os import listdir
+		results_dir = data_path + experiment + '/px' + str(prepixelation) + '/'
+		results_dir = path.expanduser(results_dir)
+		pre_fileslist = listdir(results_dir)
+		
 	print('Loading data from '+results_dir)
-	
-	
-	files = [lefile for lefile in listdir(results_dir) if lefile.endswith('.csv') and not lefile.endswith(ignore_filename+'.csv')]
+		
+	if pre_fileslist == []:
+		raise InputError('For some reason the list of results files could not be populated.')
+	files = [lefile for lefile in pre_fileslist if lefile.endswith('.csv') and not lefile.endswith(ignore_filename+'.csv')]
 	data_all = pd.DataFrame([]) # empty container frame for concatenating input from multiple files
 	for lefile in files:
 		data_lefile = pd.DataFrame.from_csv(results_dir+lefile)
