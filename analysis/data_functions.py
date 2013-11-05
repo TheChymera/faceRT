@@ -29,7 +29,6 @@ def get_and_filter_results(experiment=False, source=False, prepixelation=False, 
 						if key == 'href' and value.endswith('.csv'):
 							pre_fileslist.append(value)
 		results_dir = data_path+experiment+'/px'+str(prepixelation)+'/'
-		print results_dir
 		data_url = urllib.urlopen(results_dir).read()
 		parser = ChrParser()
 		pre_fileslist = []
