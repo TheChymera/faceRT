@@ -4,6 +4,7 @@ __author__ = 'Horea Christian'
 from scipy.stats import ttest_ind, sem
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import ttest_ind
 from matplotlib.font_manager import FontProperties
 from pylab import figure, show, errorbar, setp, legend
 from matplotlib import axis
@@ -15,7 +16,7 @@ def main(experiment=False, source=False, prepixelation=False, elinewidth=2, ecol
 	ids = sorted(list(set(data_all['ID'])))
 	pos_ids = np.arange(len(ids))
 	
-	fig = figure(figsize=(pos_ids.max()*5, 4), dpi=300,facecolor='#00eeee', tight_layout=make_tight)
+	fig = figure(figsize=(pos_ids.max()*5, 4), dpi=300,facecolor='#eeeeee', tight_layout=make_tight)
 	ax=fig.add_subplot(1,1,1)
 	width = 0.1
 	ax.yaxis.grid(True, linestyle='-', which='major', color='#dddddd',alpha=0.5, zorder = 1)
@@ -46,7 +47,6 @@ def main(experiment=False, source=False, prepixelation=False, elinewidth=2, ecol
 	width_multiplier = 15/np.shape(data_all[(data_all['scrambling'] == scrambling)].groupby('ID')['RT'].mean())[0]
 	plt.axvline(pos_ids[-1]+1-width*width_multiplier, color='0.2')
 	
-	
 	ids=ids+['TOTAL']
 	pos_ids = np.arange(len(ids))
 	ax.set_ylabel(r'$\mathsf{\overline{RT}}$ [s]', fontsize=11)
@@ -60,8 +60,8 @@ def main(experiment=False, source=False, prepixelation=False, elinewidth=2, ecol
 	axis.Axis.zoom(ax.yaxis, -0.5) # sets y margins further apart from the content proportional to its length
 	ax.set_ylim(bottom=0) # after scaling to disregard padding unerneath zero.
 	legend((plot_em_strong,plot_em_weak, plot_sc),('Strong Emotion','Weak Emotion', 'Scrambled '+', '.join(scrambling_list)),loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False,prop= FontProperties(size='9'))
-	#~ legend((plot_em_strong,plot_em_weak, plot_sc),('Strong Emotion','Weak Emotion', 'Scrambled '+', '.join(scrambling_list)), 'upper right', shadow=False, frameon=False, prop= FontProperties(size='11'))
-
+	return data_all
+	
 if __name__ == '__main__':
-	main(experiment='11px-4px-5steps', prepixelation=6)
+	main()
 	show()
