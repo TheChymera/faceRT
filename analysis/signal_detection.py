@@ -57,20 +57,19 @@ def main(experiment=False, source=False, prepixelation=False, elinewidth=2, ecol
 			total_errors.ix[id_ix+2+scrambling_id]['intensity'] = 100
 			
 
-	total_errors_just_for_plotting = total_errors 	# please DO NOT USE THE DATA FROM THIS VARIABLE for anything BUT plotting
+	total_errors_just_for_plotting = total_errors 	# please DO NOT USE THE DATA FROM THIS NEW VARIABLE for anything BUT plotting
 	total_errors_just_for_plotting.ix[(total_errors_just_for_plotting['error rate'] == 0), 'error rate'] = 0.002 # this is a hack to make 0-height bins visible when plotting
 	
 	for scrambling_id, scrambling in enumerate(set(total_errors_just_for_plotting['scrambling'])):
 		if scrambling == 0:
 			#below this: per-participant graphs
-			errors_part_0 = total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate']
-			plot_em_strong = plt.bar(pos_ids-width, errors_part_0, width ,color='m', alpha=0.4, zorder = 1, linewidth=0)
+			plot_em_strong = plt.bar(pos_ids-width, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate'], width ,color='m', alpha=0.4, zorder = 1, linewidth=0)
 			plot_em_weak = plt.bar(pos_ids, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 40)]['error rate'], width ,color='m', alpha=0.7, zorder = 1, linewidth=0)
 			#below this: total graphs
-			plt.bar(pos_ids[-1]+1-width, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate'].mean(), width ,color='m', alpha=0.4, zorder = 1, linewidth=0)
-			errorbar(pos_ids[-1]+1-(width/2), total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate'].mean(), yerr=sem(total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling)]['error rate']), ecolor=ecolor, elinewidth=elinewidth, capsize=0, linestyle='None', zorder = 2)
-			plt.bar(pos_ids[-1]+1, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 40)]['error rate'].mean(), width ,color='m', alpha=0.7, zorder = 1, linewidth=0)
-			errorbar(pos_ids[-1]+1+(width/2)+width*scrambling_id, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 40)]['error rate'].mean(), yerr=sem(total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling)]['error rate']), ecolor=ecolor, elinewidth=elinewidth, capsize=0, linestyle='None', zorder = 2)
+			tot_plot_em_strong = plt.bar(pos_ids[-1]+1-width, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate'].mean(), width ,color='m', alpha=0.4, zorder = 1, linewidth=0)
+			tot_err_em_strong = errorbar(pos_ids[-1]+1-(width/2), total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate'].mean(), yerr=sem(total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 100)]['error rate']), ecolor=ecolor, elinewidth=elinewidth, capsize=0, linestyle='None', zorder = 2)
+			tot_plot_em_weak = plt.bar(pos_ids[-1]+1, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 40)]['error rate'].mean(), width ,color='m', alpha=0.7, zorder = 1, linewidth=0)
+			tot_err_em_weak = errorbar(pos_ids[-1]+1+(width/2)+width*scrambling_id, total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 40)]['error rate'].mean(), yerr=sem(total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling) & (total_errors_just_for_plotting['intensity'] == 40)]['error rate']), ecolor=ecolor, elinewidth=elinewidth, capsize=0, linestyle='None', zorder = 2)
 		else:
 			#below this: per-participant graphs
 			errors_part_n0 = total_errors_just_for_plotting[(total_errors_just_for_plotting['scrambling'] == scrambling)]['error rate']
@@ -90,7 +89,7 @@ def main(experiment=False, source=False, prepixelation=False, elinewidth=2, ecol
 	ax.set_ylabel(r'$\mathsf{\Sigma_{wrong} / \Sigma_{all}}$', fontsize=13)
 	ax.set_xlabel('Participant')
 	ax.set_xticks(pos_ids + width*3)
-	ax.set_xticklabels(ids,fontsize=9,rotation=30)
+	ax.set_xticklabels(ids,fontsize=9) # add rotation=30 if labels are too long and need rotating
 	for tick in ax.axes.get_xticklines():
 		tick.set_visible(False)
 	axis.Axis.zoom(ax.xaxis, -0.5)
