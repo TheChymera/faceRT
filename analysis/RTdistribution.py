@@ -33,6 +33,7 @@ def main(experiment=False, source=False, prepixelation=False, num_bins=False, ke
 	data_filtered = pd.concat([data_filtered, data_scrambling], ignore_index=True)
     
     fig = figure(figsize=(data_filtered['RT'].max()*4, 5),  dpi=300,facecolor='#eeeeee', tight_layout=make_tight)
+    ax=fig.add_subplot(1,1,1)
     # the histogram of the data
     n, bins, patches = plt.hist(data_filtered['RT'], num_bins, normed=True, facecolor='green', alpha=0.5, linewidth=linewidth)
     # add a 'best fit' line
@@ -46,7 +47,10 @@ def main(experiment=False, source=False, prepixelation=False, num_bins=False, ke
     if print_title:
         plt.title('Histogram of RTs for scrambling = '+ ', '.join(keep_scrambling)+ r'		$\mu\approx$'+str(np.around(mu, decimals=2))+r' s, $\sigma\approx$'+str(np.around(sigma, decimals=2))+' s')
     plt.subplots_adjust(left=0.15)# Tweak spacing to prevent clipping of ylabel
+    axis.Axis.zoom(ax.yaxis, -0.5) # sets y margins further apart from the content proportional to its length
+    ax.set_ylim(bottom=0) # after scaling to disregard padding unerneath zero.
     legend(('Fitted normal distribution', 'RT bins'), loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False, prop=FontProperties(size='9'))
+    
     return data_filtered
 
 if __name__ == '__main__':
