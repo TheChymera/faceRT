@@ -60,6 +60,7 @@ def main(experiment=False, source=False, prepixelation=False, elinewidth=2, ecol
 	axis.Axis.zoom(ax.yaxis, -0.5) # sets y margins further apart from the content proportional to its length
 	ax.set_ylim(bottom=0) # after scaling to disregard padding unerneath zero.
 	legend((plot_em_strong,plot_em_weak, plot_sc),('Strong Emotion','Weak Emotion', 'Scrambled '+', '.join(scrambling_list)),loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False,prop= FontProperties(size='9'))
+	
 	return data_all
 	
 if __name__ == '__main__':
