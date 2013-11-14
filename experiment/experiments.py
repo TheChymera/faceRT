@@ -122,12 +122,12 @@ def em_faces(win, expInfo, fixation, fixationtime, trialClock, u, local_dir):
 			core.quit() # quit via escape
 		keypress = event.getKeys(keyList=None,timeStamped=trialClock)
 		if keypress == []:
-			keypress = np.array([['none',5]])
+			keypress = np.array([['none',trial_time]])
 		elif keypress != []:
 			keypress = np.array(keypress)
 		keypress = keypress[np.in1d(keypress[:, 0], ['left', 'right', 'none'])]#remove any other keys except left, right, none
 		if len(keypress) == 0:
-			keypress = np.array(['none',5])
+			keypress = np.array(['none',trial_time])
 		results_writer.writerow([harari_stimuli_val['emotion'],harari_stimuli_val['emotion intensity'],harari_stimuli_val['scrambling'],harari_stimuli_val['gender'],
 		harari_stimuli_val['top face'],harari_stimuli_val['left face'],harari_stimuli_val['right face'],harari_stimuli_val['correct answer'],
 		keypress[0][0], keypress[0][1], ix])
