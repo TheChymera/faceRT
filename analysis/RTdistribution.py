@@ -13,8 +13,8 @@ from os import listdir, path
 from data_functions import get_and_filter_results
 from chr_helpers import get_config_file
 
-def main(experiment=False, source=False, prepixelation=False, num_bins=False, keep_scrambling=False, make_tight=True, print_title = True, linewidth=0.5):
-    data_all = get_and_filter_results(experiment, source, prepixelation)
+def main(experiment=False, source=False, prepixelation='not specified', num_bins=False, keep_scrambling=False, make_tight=True, print_title = True, linewidth=0.5):
+    data_all = get_and_filter_results(experiment, source, prepixelation, remove='no-response')
     localpath = path.dirname(path.realpath(__file__)) + '/'
     config = get_config_file(localpath)
     
@@ -34,6 +34,8 @@ def main(experiment=False, source=False, prepixelation=False, num_bins=False, ke
     
     fig = figure(figsize=(data_filtered['RT'].max()*4, 5),  dpi=300,facecolor='#eeeeee', tight_layout=make_tight)
     ax=fig.add_subplot(1,1,1)
+    ax.yaxis.grid(True, linestyle='-', which='major', color='#dddddd',alpha=0.6, zorder = 0)
+    ax.set_axisbelow(True)
     # the histogram of the data
     n, bins, patches = plt.hist(data_filtered['RT'], num_bins, normed=True, facecolor='green', alpha=0.5, linewidth=linewidth)
     # add a 'best fit' line
