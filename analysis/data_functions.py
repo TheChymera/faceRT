@@ -1,6 +1,6 @@
 __author__ = 'Horea Christian'
 
-def get_and_filter_results(experiment=False, source=False, prepixelation='not specified', remove='', mismeasurement='remove', apply_correct_values=False, make_COI=False):
+def get_and_filter_results(experiment=False, source=False, prepixelation='not specified', remove='', mismeasurement='remove', apply_correct_values=False, make_CoI=False):
 	import pandas as pd
 	from os import path
 	import sys
@@ -59,12 +59,13 @@ def get_and_filter_results(experiment=False, source=False, prepixelation='not sp
 		data_lefile = pd.DataFrame.from_csv(results_dir+lefile)
 		data_lefile['ID'] = path.splitext(lefile)[0]
 		scrambling_list = set(data_lefile['scrambling'])
-		if apply_correct_values:
+		if apply_correct_values: # relevant only for some legacy data where the script miswrote values to the results file
 			data_lefile=correct_values(data_lefile)	
-		if make_COI:
+		if make_CoI:
 			data_lefile = categories_of_interest(data_lefile, scrambling_list)
+		
 		elif mismeasurement == 'fix':
-			make_COI == True
+			make_CoI == True
 			data_lefile = categories_of_interest(data_lefile, scrambling_list)
 		if mismeasurement == 'remove':
 			data_lefile = data_lefile[data_lefile['RT'] >0] # remove entries with instant RTs here
@@ -72,8 +73,9 @@ def get_and_filter_results(experiment=False, source=False, prepixelation='not sp
 			data_lefile.ix[(data_lefile['RT'] <=0), 'RT'] = False # remove entries with incorrect answers here
 		elif mismeasurement == 'fix':
 			import numpy as np
-			for COI in set(data_lefile['COI']):
-				data_lefile.ix[(data_lefile['RT'] <=0) & (data_lefile['COI'] == COI), 'RT'] = np.median(data_lefile[data_lefile['COI'] == COI]['RT']) #replace missing values with the median of the repecitive COI
+			for CoI in set(data_lefile['CoI']):
+				data_lefile.ix[(data_lefile['RT'] <=0) & (data_lefile['CoI'] == CoI), 'RT'] = np.median(data_lefile[data_lefile['CoI'] == CoI]['RT']) #replace missing values with the median of the repecitive CoI
+		
 		if 'no-response' in remove:
 			data_lefile = data_lefile[data_lefile['keypress'] != 'none'] # remove entries with no answers here
 		if 'incorrect' in remove:
@@ -82,21 +84,17 @@ def get_and_filter_results(experiment=False, source=False, prepixelation='not sp
 	return data_all
 	
 def categories_of_interest(data_frame, scrambling_list):
-	# DEFINE CATEGORIES OF INTEREST (COI)
-	data_frame['COI']='' 
-	data_frame.ix[(data_frame['scrambling'] == 0) & (data_frame['intensity'] == 100), 'COI'] = 'em-easy'
-	data_frame.ix[(data_frame['scrambling'] == 0) & (data_frame['intensity'] == 40), 'COI'] = 'em-hard'
+	# DEFINE CATEGORIES OF INTEREST (CoI)
+	data_frame['CoI']='' 
+	data_frame.ix[(data_frame['scrambling'] == 0) & (data_frame['intensity'] == 100), 'CoI'] = 'emotion-easy'
+	data_frame.ix[(data_frame['scrambling'] == 0) & (data_frame['intensity'] == 40), 'CoI'] = 'emotion-hard'
 	for i in scrambling_list:
 		if i != 0: #don't overwrite emotion tags
-			data_frame.ix[(data_frame['scrambling'] == i), 'COI'] = 'sc-' + str(i)
-			data_frame.ix[(data_frame['scrambling'] == i), 'COI'] = 'sc-' + str(i)
-			data_frame.ix[(data_frame['scrambling'] == i), 'COI'] = 'sc-' + str(i)
-			data_frame.ix[(data_frame['scrambling'] == i), 'COI'] = 'sc-' + str(i)
-			data_frame.ix[(data_frame['scrambling'] == i), 'COI'] = 'sc-' + str(i)
-	# END DEFINE CATEGORIES OF INTEREST (COI)
+			data_frame.ix[(data_frame['scrambling'] == i), 'CoI'] = 'scrambling-' + str('{:02}'.format(i))
+	# END DEFINE CATEGORIES OF INTEREST (CoI)
 	return data_frame
 
-def correct_values(data):
+def correct_values(data): # relevant for some legacy data where the script miswrote values to the results file
 	data.ix[(data['scrambling'] != 0), 'intensity'] = 100
 	return data
 	
