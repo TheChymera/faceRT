@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from __future__ import division
 __author__ = 'Horea Christian'
-from scipy.stats import ttest_ind
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
