@@ -12,7 +12,7 @@ import pandas.rpy.common as com
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 
-def main(experiment=False, source=False, prepixelation='not specified', elinewidth=2, ecolor='0.3', make_tight=True, total='means', make_std=False, make_sem=True):
+def main(experiment=False, source=False, prepixelation='not specified', elinewidth=2, ecolor='0.3', make_tight=True, total='means', make_std=False, make_sem=True, fontscale=1):
 	data_all = get_and_filter_results(experiment, source, prepixelation, mismeasurement='fix', apply_correct_values=True, make_CoI=True)
 	scrambling_list = set(data_all['scrambling'])
 	data_all = categories_of_interest(data_all, scrambling_list)
@@ -86,17 +86,17 @@ def main(experiment=False, source=False, prepixelation='not specified', elinewid
 	
 	ids=ids+['ALL']
 	pos_ids = np.arange(len(ids))
-	ax.set_ylabel(r'$\mathsf{\overline{RT}}$ [s]', fontsize=11)
-	ax.set_xlabel('Participant', fontsize=11)
+	ax.set_ylabel(r'$\mathsf{\overline{RT}}$ [s]', fontsize=11*fontscale)
+	ax.set_xlabel('Participant', fontsize=11*fontscale)
 	ax.set_xticks(pos_ids + width*3)
-	ax.set_xticklabels(ids,fontsize=9) # add rotation=30 if things get too crowded
+	ax.set_xticklabels(ids,fontsize=9*fontscale) # add rotation=30 if things get too crowded
 	for tick in ax.axes.get_xticklines():
 		tick.set_visible(False)
 	ax.set_xlim(0, pos_ids[-1]+width*5) # before scaling to add padding in front of zero
 	axis.Axis.zoom(ax.xaxis, -0.5) # sets x margins further apart from the content proportional to its length
 	axis.Axis.zoom(ax.yaxis, -0.5) # sets y margins further apart from the content proportional to its length
 	ax.set_ylim(bottom=0) # after scaling to disregard padding unerneath zero.
-	legend((plot_em_strong,plot_em_weak, plot_sc),('Strong Emotion','Weak Emotion', 'Scrambled '+', '.join(scrambling_list)),loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False,prop= FontProperties(size='9'))
+	legend((plot_em_strong,plot_em_weak, plot_sc),('Strong Emotion','Weak Emotion', 'Scrambled '+', '.join(scrambling_list)),loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False, prop=FontProperties(size=str(9*fontscale)))
 
 	return data_all
 	
