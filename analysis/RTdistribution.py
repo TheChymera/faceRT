@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from __future__ import division
 __author__ = 'Horea Christian'
-from scipy.stats import ttest_ind
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
@@ -13,7 +12,7 @@ from os import listdir, path
 from data_functions import get_and_filter_results
 from chr_helpers import get_config_file
 
-def main(experiment=False, source=False, prepixelation='not specified', num_bins=False, keep_scrambling=False, make_tight=True, print_title = True, linewidth=0.5):
+def main(experiment=False, source=False, prepixelation='not specified', num_bins=False, keep_scrambling=False, make_tight=True, print_title = True, linewidth=0.5, fontscale=1):
     data_all = get_and_filter_results(experiment, source, prepixelation, remove='no-response')
     localpath = path.dirname(path.realpath(__file__)) + '/'
     config = get_config_file(localpath)
@@ -51,7 +50,7 @@ def main(experiment=False, source=False, prepixelation='not specified', num_bins
     plt.subplots_adjust(left=0.15)# Tweak spacing to prevent clipping of ylabel
     axis.Axis.zoom(ax.yaxis, -0.5) # sets y margins further apart from the content proportional to its length
     ax.set_ylim(bottom=0) # after scaling to disregard padding unerneath zero.
-    legend(('Fitted normal distribution', 'RT bins'), loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False, prop=FontProperties(size='9'))
+    legend(('Fitted normal distribution', 'RT bins'), loc='upper center', bbox_to_anchor=(0.5, 1.065), ncol=3, fancybox=False, shadow=False, prop=FontProperties(size=str(int(9*fontscale))))
     
     return data_filtered
 
