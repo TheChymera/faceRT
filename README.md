@@ -4,7 +4,9 @@ Python scripts for stimulus presentation, and data acquisition and analysis; gea
 
 ## Dependencies
 
-* **[numpy](https://en.wikipedia.org/wiki/Numpy)** - in [Portage](http://en.wikipedia.org/wiki/Portage_(software)) as **app-text/texlive**
+* **[NumPy](https://en.wikipedia.org/wiki/Numpy)** - in [Portage](http://en.wikipedia.org/wiki/Portage_(software)) as **app-text/texlive**
+* **[SciPy](https://en.wikipedia.org/wiki/Scipy)** - in Portage as **sci-libs/scipy**
+* **[matplotlib](https://en.wikipedia.org/wiki/Matplotlib)** - in Portage as **dev-python/matplotlib**
 * **[pandas](https://en.wikipedia.org/wiki/Pandas_(software))** - in Portage as **dev-python/pandas**
 * >=**[psychopy](https://en.wikipedia.org/wiki/Psychopy)**-1.78.00 - in the Portage *science overlay* as **sci-biology/psychopy**
 * **[chr-helpers](https://github.com/TheChymera/chr-helpers)** - in the Portage *chymeric overlay* as **dev-python/chr-helpers**
