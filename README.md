@@ -2,7 +2,7 @@
 
 Python scripts for stimulus presentation, and data acquisition and analysis; geared towards determining reaction times to faces presented in a Hariri-style matching task.
 
-DEPENDS on:
+## Dependencies
 
 * **[numpy](https://en.wikipedia.org/wiki/Numpy)** - in [Portage](http://en.wikipedia.org/wiki/Portage_(software)) as **app-text/texlive**
 * **[pandas](https://en.wikipedia.org/wiki/Pandas_(software))** - in Portage as **dev-python/pandas**
