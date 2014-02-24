@@ -8,8 +8,8 @@ Python scripts for stimulus presentation, and data acquisition and analysis; gea
 * **[SciPy](https://en.wikipedia.org/wiki/Scipy)** - in Portage as **sci-libs/scipy**
 * **[matplotlib](https://en.wikipedia.org/wiki/Matplotlib)** - in Portage as **dev-python/matplotlib**
 * **[pandas](https://en.wikipedia.org/wiki/Pandas_(software))** - in Portage as **dev-python/pandas**
-* >=**[psychopy](https://en.wikipedia.org/wiki/Psychopy)**-1.78.00 - in the Portage *science overlay* as **sci-biology/psychopy**
-* **[chr-helpers](https://github.com/TheChymera/chr-helpers)** - in the Portage *chymeric overlay* as **dev-python/chr-helpers**
+* >=**[psychopy](https://en.wikipedia.org/wiki/Psychopy)**-1.78.00 - in the Portage *[science overlay](https://wiki.gentoo.org/wiki/Project:Science/Overlay)* as **sci-biology/psychopy**
+* **[chr-helpers](https://github.com/TheChymera/chr-helpers)** - in the Portage *[chymerc overlay](https://github.com/TheChymera/chymeric)* as **dev-python/chr-helpers**
 
 Non-free stimulus files are excluded via ```.gitignore```. Please contact the project leader for advice on how to acquire suitable stimulus images.
 
