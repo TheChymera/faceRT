@@ -14,4 +14,4 @@ Python scripts for stimulus presentation, and data acquisition and analysis; gea
 Non-free stimulus files are excluded via ```.gitignore```. Please contact the project leader for advice on how to acquire suitable stimulus images.
 
 Released under the GPLv3 license.
-Project led by Horea Christian (address all correspondence to: h.chr@mail.ru)
+Project led by Horea Christian (address all e-mail correspondence to: h.chr@mail.ru)
