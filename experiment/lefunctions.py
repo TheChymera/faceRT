@@ -9,20 +9,20 @@ def save_csv(filename, firstline=['this line caused by save_csv in lefunctions']
     import csv
     jzt=datetime.now()
     time = str(date.today())+'_'+str(jzt.hour)+str(jzt.minute)+str(jzt.second)
-    if path.isdir(path.dirname(filename)): 
+    if path.isdir(path.dirname(filename)):
 		pass
     else:
 		makedirs(path.dirname(filename))
     if path.isfile(filename):
         if path.isdir(path.dirname(filename)+'/.backup'):
             pass
-        else: makedirs(path.dirname(filename)+'/.backup')        
+        else: makedirs(path.dirname(filename)+'/.backup')
         newname = path.dirname(filename)+'/.backup/'+path.splitext(path.basename(filename))[0]+'_'+time+path.splitext(path.basename(filename))[1]
         move(filename, newname)
-        print 'moved pre-existing data file '+ filename +' to backup location ('+newname+')'
+        print('moved pre-existing data file '+ filename +' to backup location ('+newname+')')
     else: pass
     datafile = open(filename, 'a')
     datawriter = csv.writer(datafile, delimiter=',')
     #print first line
     datawriter.writerow(firstline)
-    return datawriter, datafile	
+    return datawriter, datafile
